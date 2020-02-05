@@ -8,6 +8,7 @@ import com.dev.cinema.util.HibernateUtil;
 
 import java.util.Optional;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -43,8 +44,10 @@ public class UserDaoImpl implements UserDao {
             Root<User> root = criteriaQuery.from(User.class);
             criteriaQuery.select(root).where(cb.equal(root.get("email"), email));
             return Optional.of(session.createQuery(criteriaQuery).getSingleResult());
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             return Optional.empty();
+        } catch (Exception e){
+            throw new DataProcessingException("Can't find by email");
         }
     }
 }
