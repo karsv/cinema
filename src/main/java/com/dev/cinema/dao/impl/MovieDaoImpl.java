@@ -9,9 +9,6 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
