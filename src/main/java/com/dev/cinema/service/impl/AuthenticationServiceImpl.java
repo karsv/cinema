@@ -19,12 +19,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password) throws AuthenticationException,
             DataProcessingException {
-        Optional<User> user = userService.findByEmail(email);
-        if (user.isEmpty() || !user.get().getPassword()
-                .equals(HashUtil.hashPassword(password, user.get().getSalt()))) {
+       User user = userService.findByEmail(email);
+        if (user == null || !user.getPassword()
+                .equals(HashUtil.hashPassword(password, user.getSalt()))) {
             throw new AuthenticationException("Wrong authentification parameters!");
         }
-        return user.get();
+        return user;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new RegisterException("Wrong email format!");
         }
 
-        if (userService.findByEmail(email).isPresent()) {
+        if (userService.findByEmail(email) != null) {
             throw new RegisterException("There is user with such email!");
         }
 

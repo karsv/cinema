@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) throws DataProcessingException {
+    public User findByEmail(String email) throws DataProcessingException {
         return userDao.findByEmail(email);
     }
 }

@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface UserDao {
     User add(User user) throws DataProcessingException;
 
-    Optional<User> findByEmail(String email) throws DataProcessingException;
+    User findByEmail(String email) throws DataProcessingException;
 }
