@@ -1,5 +1,6 @@
 package com.dev.cinema;
 
+import com.dev.cinema.dao.impl.CinemaHallDaoImpl;
 import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.lib.Injector;
@@ -16,7 +17,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Main {
+    private static Logger LOGGER = LogManager.getLogger(Main.class);
+
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
     public static void main(String[] args) throws DataProcessingException, AuthenticationException {
@@ -44,8 +50,7 @@ public class Main {
 
         AuthenticationService authenticationService = (AuthenticationService)
                 injector.getInstance(AuthenticationService.class);
-        authenticationService.register("user@user.com", "123qwe");
-        authenticationService.register("user@user.com", "123qw3");
-        User user = authenticationService.login("user@user.com", "123qwe");
+        authenticationService.register("user1@user.com", "123qwe");
+        User user = authenticationService.login("user1@user.com", "123qwe");
     }
 }
