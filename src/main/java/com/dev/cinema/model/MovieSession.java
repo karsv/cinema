@@ -19,11 +19,9 @@ public class MovieSession {
     private Long id;
 
     @ManyToOne
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private Movie movie;
 
     @ManyToOne
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     private CinemaHall cinemaHall;
 
     private LocalDateTime showTime;
