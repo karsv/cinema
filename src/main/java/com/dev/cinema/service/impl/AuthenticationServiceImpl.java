@@ -32,6 +32,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!EmailUtil.isValid(email)) {
             throw new RegisterException("Wrong email format!");
         }
+
+        if (userService.findByEmail(email).isPresent()) {
+            throw new RegisterException("There is user with such email!");
+        }
+
         User user = new User();
         user.setEmail(email);
         user.setSalt(HashUtil.getSalt());
