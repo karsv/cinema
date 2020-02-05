@@ -16,7 +16,6 @@ import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private static final Logger LOGGER = LogManager.getLogger(CinemaHallDaoImpl.class);
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
@@ -31,7 +30,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            LOGGER.error("Can't add cinemaHall", e);
             throw new RuntimeException("Can't add cinemaHall", e);
         }
     }
@@ -48,7 +46,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            LOGGER.error("Can't get all cinemaHalls", e);
             throw new RuntimeException("Can't get all cinemaHalls", e);
         }
     }

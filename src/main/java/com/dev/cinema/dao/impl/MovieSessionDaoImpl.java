@@ -20,7 +20,6 @@ import org.hibernate.Transaction;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    private static final Logger LOGGER = LogManager.getLogger(MovieSessionDaoImpl.class);
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -35,7 +34,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            LOGGER.error("Can't add movie session", e);
             throw new RuntimeException("Can't add movie session", e);
         }
     }
@@ -56,7 +54,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            LOGGER.error("Can't find available session", e);
             throw new RuntimeException("Can't find available session", e);
         }
     }
