@@ -7,8 +7,6 @@ import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.UserService;
 
-import java.util.Optional;
-
 @Service
 public class UserServiceImpl implements UserService {
     @Inject

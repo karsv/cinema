@@ -1,6 +1,5 @@
 package com.dev.cinema;
 
-import com.dev.cinema.dao.impl.CinemaHallDaoImpl;
 import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.lib.Injector;

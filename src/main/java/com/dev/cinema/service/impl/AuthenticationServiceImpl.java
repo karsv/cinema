@@ -10,8 +10,6 @@ import com.dev.cinema.service.UserService;
 import com.dev.cinema.util.EmailUtil;
 import com.dev.cinema.util.HashUtil;
 
-import java.util.Optional;
-
 public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     private UserService userService;
@@ -19,7 +17,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User login(String email, String password) throws AuthenticationException,
             DataProcessingException {
-       User user = userService.findByEmail(email);
+        User user = userService.findByEmail(email);
         if (user == null || !user.getPassword()
                 .equals(HashUtil.hashPassword(password, user.getSalt()))) {
             throw new AuthenticationException("Wrong authentification parameters!");
