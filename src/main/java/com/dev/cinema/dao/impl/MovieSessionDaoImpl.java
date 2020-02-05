@@ -1,6 +1,7 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.MovieSessionDao;
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.util.HibernateUtil;
@@ -20,7 +21,7 @@ import org.hibernate.Transaction;
 public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
-    public MovieSession add(MovieSession movieSession) {
+    public MovieSession add(MovieSession movieSession) throws DataProcessingException {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -32,7 +33,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't add movie session", e);
+            throw new DataProcessingException("Can't add movie session", e);
         }
     }
 

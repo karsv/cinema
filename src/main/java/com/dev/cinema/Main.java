@@ -1,9 +1,13 @@
 package com.dev.cinema;
 
+import com.dev.cinema.exception.AuthenticationException;
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.User;
+import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
@@ -15,7 +19,7 @@ import java.time.LocalTime;
 public class Main {
     private static Injector injector = Injector.getInstance("com.dev.cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DataProcessingException, AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
@@ -35,6 +39,13 @@ public class Main {
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
-        movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(1L, LocalDate.now())
+                .forEach(System.out::println);
+
+        AuthenticationService authenticationService = (AuthenticationService)
+                injector.getInstance(AuthenticationService.class);
+        authenticationService.register("user@user.com", "123qwe");
+        authenticationService.register("user@user.com", "123qw3");
+        User user = authenticationService.login("user@user.com", "123qwe");
     }
 }

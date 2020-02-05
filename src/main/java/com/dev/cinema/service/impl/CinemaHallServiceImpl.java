@@ -1,6 +1,7 @@
 package com.dev.cinema.service.impl;
 
 import com.dev.cinema.dao.CinemaHallDao;
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.CinemaHall;
@@ -15,12 +16,12 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     private CinemaHallDao cinemaHallDao;
 
     @Override
-    public CinemaHall add(CinemaHall cinemaHall) {
+    public CinemaHall add(CinemaHall cinemaHall) throws DataProcessingException {
         return cinemaHallDao.add(cinemaHall);
     }
 
     @Override
-    public List<CinemaHall> getAll() {
+    public List<CinemaHall> getAll() throws DataProcessingException {
         return cinemaHallDao.getAll();
     }
 }
