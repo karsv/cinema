@@ -2,7 +2,6 @@ package com.dev.cinema.service.impl;
 
 import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.exception.DataProcessingException;
-import com.dev.cinema.exception.RegisterException;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.AuthenticationService;
@@ -28,13 +27,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User register(String email, String password) throws DataProcessingException {
         if (!EmailUtil.isValid(email)) {
-            throw new RegisterException("Wrong email format!");
+            throw new DataProcessingException("Wrong email format!");
         }
-
-        if (userService.findByEmail(email) != null) {
-            throw new RegisterException("There is user with such email!");
-        }
-
         User user = new User();
         user.setEmail(email);
         user.setSalt(HashUtil.getSalt());

@@ -26,13 +26,15 @@ public class UserDaoImpl implements UserDao {
             user.setId(userId);
             return user;
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             throw new DataProcessingException("Can't create user", e);
         }
     }
 
     @Override
     public User findByEmail(String email) throws DataProcessingException {
-        Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
