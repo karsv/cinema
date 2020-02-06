@@ -46,7 +46,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             shoppingCart.setTickets(tickets);
             return shoppingCart;
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get by user", e);
+            throw new DataProcessingException("Can't get shopping cart by user", e);
         }
     }
 
