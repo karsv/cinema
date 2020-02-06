@@ -1,6 +1,7 @@
 package com.dev.cinema.service.impl;
 
 import com.dev.cinema.dao.MovieDao;
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.lib.Inject;
 import com.dev.cinema.lib.Service;
 import com.dev.cinema.model.Movie;
@@ -15,7 +16,7 @@ public class MovieServiceImpl implements MovieService {
     private MovieDao movieDao;
 
     @Override
-    public Movie add(Movie movie) {
+    public Movie add(Movie movie) throws DataProcessingException {
         return movieDao.add(movie);
     }
 

@@ -1,11 +1,12 @@
 package com.dev.cinema.dao;
 
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.Movie;
 
 import java.util.List;
 
 public interface MovieDao {
-    Movie add(Movie movie);
+    Movie add(Movie movie) throws DataProcessingException;
 
     List<Movie> getAll();
 }
