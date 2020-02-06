@@ -6,12 +6,9 @@ import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.User;
 import com.dev.cinema.util.HibernateUtil;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class UserDaoImpl implements UserDao {
@@ -36,11 +33,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User findByEmail(String email) throws DataProcessingException {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<User> criteriaQuery = cb.createQuery(User.class);
-            Root<User> root = criteriaQuery.from(User.class);
-            criteriaQuery.select(root).where(cb.equal(root.get("email"), email));
-            return session.createQuery(criteriaQuery).uniqueResult();
+            Query<User> query = session.createQuery("from User where email = :email");
+            query.setParameter("email", email);
+            return query.uniqueResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find by email");
         }
