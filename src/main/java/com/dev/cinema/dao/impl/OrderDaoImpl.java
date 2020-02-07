@@ -39,12 +39,9 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getAllUserOrders(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaQuery<Order> criteriaQuery = criteriaBuilder.createQuery(Order.class);
-            Root<Order> root = criteriaQuery.from(Order.class);
-            root.fetch("tickets", JoinType.LEFT);
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("user"), user));
-            return session.createQuery(criteriaQuery).getResultList();
+            return session.createQuery("FROM orders WHERE user = :user", Order.class)
+                    .setParameter("user", user)
+                    .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all user orders" + user.getEmail(), e);
         }
