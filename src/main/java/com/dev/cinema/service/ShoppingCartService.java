@@ -7,6 +7,8 @@ import com.dev.cinema.model.User;
 public interface ShoppingCartService {
     void addSession(MovieSession movieSession, User user);
 
+    void clear(User user);
+
     ShoppingCart getByUser(User user);
 
     void registerNewShoppingCart(User user);
