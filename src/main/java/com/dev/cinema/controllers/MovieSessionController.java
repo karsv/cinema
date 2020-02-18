@@ -5,6 +5,8 @@ import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.service.MovieSessionService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,8 @@ public class MovieSessionController {
     @PostMapping("/add")
     private void addMovieSession(@RequestBody MovieSessionDto movieSessionDto) {
         MovieSession movieSession = new MovieSession();
-        movieSession.setShowTime(movieSessionDto.getShowTime());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        movieSession.setShowTime(LocalDateTime.parse(movieSessionDto.getShowTime(), formatter));
         movieSession.setMovie(movieSessionDto.getMovie());
         movieSession.setCinemaHall(movieSessionDto.getCinemaHall());
         movieSessionService.add(movieSession);
@@ -56,7 +59,8 @@ public class MovieSessionController {
         MovieSessionDto movieSessionDto = new MovieSessionDto();
         movieSessionDto.setCinemaHall(movieSession.getCinemaHall());
         movieSessionDto.setMovie(movieSession.getMovie());
-        movieSessionDto.setShowTime(movieSession.getShowTime());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        movieSessionDto.setShowTime(movieSession.getShowTime().format(formatter));
         return movieSessionDto;
     }
 }

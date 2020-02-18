@@ -8,11 +8,13 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,12 +40,12 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/addmoviesession")
-    public void addMovieSession(@RequestBody MovieSessionDto movieSessionDto,
-                                @RequestParam(value = "user_id") Long userId) {
+    public void addMovieSession(Long userId, @RequestBody MovieSessionDto movieSessionDto) {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(movieSessionDto.getCinemaHall());
         movieSession.setMovie(movieSessionDto.getMovie());
-        movieSession.setShowTime(movieSessionDto.getShowTime());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        movieSession.setShowTime(LocalDateTime.parse(movieSessionDto.getShowTime(), formatter));
         User user = userService.findById(userId);
         shoppingCartService.addSession(movieSession, user);
     }

@@ -4,11 +4,12 @@ import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MovieSessionDto {
     private Movie movie;
     private CinemaHall cinemaHall;
-    private LocalDateTime showTime;
+    private String showTime;
 
     public Movie getMovie() {
         return movie;
@@ -26,11 +27,11 @@ public class MovieSessionDto {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getShowTime() {
+    public String getShowTime() {
         return showTime;
     }
 
-    public void setShowTime(LocalDateTime showTime) {
+    public void setShowTime(String showTime) {
         this.showTime = showTime;
     }
 }
