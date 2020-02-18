@@ -10,4 +10,7 @@ public interface MovieSessionDao {
     MovieSession add(MovieSession movieSession) throws DataProcessingException;
 
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+
+    List<MovieSession> getAll();
+
 }

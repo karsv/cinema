@@ -3,7 +3,6 @@ package com.dev.cinema.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Base64;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,9 +22,9 @@ public class HashUtil {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
             messageDigest.update(salt);
-            byte[] digest = messageDigest.digest(Base64.getDecoder().decode(password));
+            byte[] digest = messageDigest.digest(password.getBytes());
             for (byte b : digest) {
-                hashedPassword.append(b);
+                hashedPassword.append(String.format("%02x", b));
             }
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error("trouble with hashing password", e);

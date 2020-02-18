@@ -10,4 +10,6 @@ public interface MovieSessionService {
     MovieSession add(MovieSession session) throws DataProcessingException;
 
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+
+    List<MovieSession> getAll();
 }

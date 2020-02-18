@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) throws DataProcessingException {
         return userDao.findByEmail(email);
     }
+
+    @Override
+    public User findById(Long id) throws DataProcessingException {
+        return userDao.findById(id);
+    }
 }
