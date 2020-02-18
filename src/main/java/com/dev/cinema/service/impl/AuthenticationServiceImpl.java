@@ -2,7 +2,6 @@ package com.dev.cinema.service.impl;
 
 import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.exception.DataProcessingException;
-import com.dev.cinema.lib.Inject;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.ShoppingCartService;
@@ -10,11 +9,15 @@ import com.dev.cinema.service.UserService;
 import com.dev.cinema.util.EmailUtil;
 import com.dev.cinema.util.HashUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Inject
+    @Autowired
     private UserService userService;
 
-    @Inject
+    @Autowired
     private ShoppingCartService shoppingCartService;
 
     @Override
