@@ -3,9 +3,6 @@ package com.dev.cinema.dto;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class MovieSessionDto {
     private Movie movie;
     private CinemaHall cinemaHall;
