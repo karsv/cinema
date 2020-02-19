@@ -67,7 +67,7 @@ public class InjectController {
         shoppingCartService.addSession(movieSession, user);
 
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
-        Order order = orderService.completeOrder(shoppingCart);
+        Order order = orderService.completeOrder(user);
         orderService.getOrderHistory(user).forEach(System.out::println);
         return "Inject successful!";
     }

@@ -32,15 +32,16 @@ public class CinemaHallController {
     }
 
     @PostMapping("/add")
-    private void addCinemaHall(@RequestBody CinemaHallRequestDto cinemaHallDto) {
-        CinemaHall cinemaHall = cinemaHallService.getById(cinemaHallDto.getCinemaHallId());
-        cinemaHallService.add(cinemaHall);
+    private CinemaHall addCinemaHall(@RequestBody CinemaHallRequestDto cinemaHallDto) {
+        CinemaHall cinemaHall = new CinemaHall();
+        cinemaHall.setCapacity(cinemaHallDto.getCapacity());
+        cinemaHall.setDescription(cinemaHallDto.getDescription());
+        return cinemaHallService.add(cinemaHall);
     }
 
     private CinemaHallResponseDto getCinemaHallToCinemaHallResponseDto(CinemaHall cinemaHall) {
         CinemaHallResponseDto cinemaHallDto = new CinemaHallResponseDto();
-        cinemaHallDto.setCapacity(cinemaHall.getCapacity());
-        cinemaHallDto.setDescription(cinemaHall.getDescription());
+        cinemaHallDto.setCinemaHallId(cinemaHall.getId());
         return cinemaHallDto;
     }
 }

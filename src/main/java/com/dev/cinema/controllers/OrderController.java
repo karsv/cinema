@@ -1,12 +1,10 @@
 package com.dev.cinema.controllers;
 
 import com.dev.cinema.dto.OrderResponseDto;
-import com.dev.cinema.dto.ShoppingCartResponseDto;
 import com.dev.cinema.dto.TicketDto;
 import com.dev.cinema.dto.UserRequestDto;
-import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.dto.UserResponseDto;
 import com.dev.cinema.model.Order;
-import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.MovieSessionService;
@@ -39,11 +37,8 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    private void completeOrder(@RequestBody ShoppingCartResponseDto shoppingCartDto) {
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setUser(shoppingCartDto.getUser());
-        shoppingCart.setTickets(shoppingCartDto.getTickets());
-        orderService.completeOrder(shoppingCart);
+    private Order completeOrder(@RequestBody UserResponseDto userResponseDto) {
+        return orderService.completeOrder(userService.findByEmail(userResponseDto.getEmail()));
     }
 
     @PostMapping("/")
@@ -60,11 +55,12 @@ public class OrderController {
         orderDto.setUserId(order.getUser().getId());
         orderDto.setTicketDtoList(order.getTickets()
                 .stream()
-                .map(this::getTicketToTicketDto)
+                .map(this::getTicketToTicketResponseDto)
                 .collect(Collectors.toList()));
         return orderDto;
     }
-    private TicketDto getTicketToTicketDto(Ticket ticket) {
+
+    private TicketDto getTicketToTicketResponseDto(Ticket ticket) {
         TicketDto ticketDto = new TicketDto();
         ticketDto.setMovieTitle(ticket.getMovie().getTitle());
         ticketDto.setShowTime(ticket.getShowtime().format(FORMATTER));
@@ -72,3 +68,4 @@ public class OrderController {
         return ticketDto;
     }
 }
+
