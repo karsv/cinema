@@ -42,7 +42,7 @@ public class OrderController {
     }
 
     @PostMapping("/")
-    private List<OrderResponseDto> getAllOrders(@RequestBody UserRequestDto userRequestDto) {
+    private List<OrderResponseDto> getAllOrders(@RequestBody UserResponseDto userRequestDto) {
         User user = userService.findByEmail(userRequestDto.getEmail());
         return orderService.getOrderHistory(user)
                 .stream()
