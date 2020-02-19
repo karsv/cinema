@@ -2,7 +2,6 @@ package com.dev.cinema.controllers;
 
 import com.dev.cinema.dto.OrderResponseDto;
 import com.dev.cinema.dto.TicketDto;
-import com.dev.cinema.dto.UserRequestDto;
 import com.dev.cinema.dto.UserResponseDto;
 import com.dev.cinema.model.Order;
 import com.dev.cinema.model.Ticket;
