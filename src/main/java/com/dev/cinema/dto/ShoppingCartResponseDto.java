@@ -5,7 +5,7 @@ import com.dev.cinema.model.User;
 
 import java.util.List;
 
-public class ShoppingCartDto {
+public class ShoppingCartResponseDto {
     private User user;
     private List<Ticket> tickets;
 

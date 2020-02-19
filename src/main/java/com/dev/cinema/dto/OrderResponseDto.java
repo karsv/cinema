@@ -6,7 +6,7 @@ import com.dev.cinema.model.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderDto {
+public class OrderResponseDto {
     private List<Ticket> tickets;
     private User user;
     private LocalDateTime orderDate;

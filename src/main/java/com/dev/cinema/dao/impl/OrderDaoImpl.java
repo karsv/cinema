@@ -47,4 +47,13 @@ public class OrderDaoImpl implements OrderDao {
             throw new DataProcessingException("Can't get all user orders" + user.getEmail(), e);
         }
     }
+
+    @Override
+    public Order getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Order.class, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find by id");
+        }
+    }
 }

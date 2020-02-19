@@ -70,4 +70,13 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             throw new DataProcessingException("Can't update by user", e);
         }
     }
+
+    @Override
+    public ShoppingCart getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(ShoppingCart.class, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find by id");
+        }
+    }
 }

@@ -13,4 +13,5 @@ public interface MovieSessionDao {
 
     List<MovieSession> getAll();
 
+    MovieSession getById(Long id);
 }

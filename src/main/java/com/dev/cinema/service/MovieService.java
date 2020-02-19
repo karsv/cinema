@@ -9,4 +9,6 @@ public interface MovieService {
     Movie add(Movie movie) throws DataProcessingException;
 
     List<Movie> getAll();
+
+    Movie getById(Long id);
 }

@@ -1,8 +1,8 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.dto.OrderDto;
-import com.dev.cinema.dto.ShoppingCartDto;
-import com.dev.cinema.dto.UserDto;
+import com.dev.cinema.dto.OrderResponseDto;
+import com.dev.cinema.dto.ShoppingCartResponseDto;
+import com.dev.cinema.dto.UserRequestDto;
 import com.dev.cinema.model.Order;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.User;
@@ -29,7 +29,7 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    private void completeOrder(@RequestBody ShoppingCartDto shoppingCartDto) {
+    private void completeOrder(@RequestBody ShoppingCartResponseDto shoppingCartDto) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(shoppingCartDto.getUser());
         shoppingCart.setTickets(shoppingCartDto.getTickets());
@@ -37,16 +37,16 @@ public class OrderController {
     }
 
     @PostMapping("/")
-    private List<OrderDto> getAllOrders(@RequestBody UserDto userDto) {
-        User user = userService.findByEmail(userDto.getEmail());
+    private List<OrderResponseDto> getAllOrders(@RequestBody UserRequestDto userRequestDto) {
+        User user = userService.findByEmail(userRequestDto.getEmail());
         return orderService.getOrderHistory(user)
                 .stream()
-                .map(this::orderToOrderDto)
+                .map(this::getOrderToOrderDto)
                 .collect(Collectors.toList());
     }
 
-    private OrderDto orderToOrderDto(Order order) {
-        OrderDto orderDto = new OrderDto();
+    private OrderResponseDto getOrderToOrderDto(Order order) {
+        OrderResponseDto orderDto = new OrderResponseDto();
         orderDto.setOrderDate(order.getOrderDate());
         orderDto.setTickets(order.getTickets());
         orderDto.setUser(order.getUser());

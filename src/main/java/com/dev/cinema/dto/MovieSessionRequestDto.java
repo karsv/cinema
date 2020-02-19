@@ -3,7 +3,7 @@ package com.dev.cinema.dto;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 
-public class MovieSessionDto {
+public class MovieSessionRequestDto {
     private Movie movie;
     private CinemaHall cinemaHall;
     private String showTime;

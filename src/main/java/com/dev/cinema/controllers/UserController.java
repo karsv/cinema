@@ -1,6 +1,7 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.dto.UserDto;
+import com.dev.cinema.dto.UserRequestDto;
+import com.dev.cinema.dto.UserResponseDto;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.UserService;
 
@@ -20,15 +21,18 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public void addUser(@RequestBody UserDto userDto) {
+    public void addUser(@RequestBody UserRequestDto userRequestDto) {
         User user = new User();
-        user.setPassword(userDto.getPassword());
-        user.setEmail(userDto.getEmail());
+        user.setPassword(userRequestDto.getPassword());
+        user.setEmail(userRequestDto.getEmail());
         userService.add(user);
     }
 
     @GetMapping("/byemail")
-    public User getUserByEmail(String email) {
-        return userService.findByEmail(email);
+    public UserResponseDto getUserByEmail(String email) {
+        User user = userService.findByEmail(email);
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setEmail(user.getEmail());
+        return userResponseDto;
     }
 }

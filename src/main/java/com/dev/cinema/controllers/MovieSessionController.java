@@ -1,6 +1,7 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.dto.MovieSessionDto;
+import com.dev.cinema.dto.MovieSessionRequestDto;
+import com.dev.cinema.dto.MovieSessionResponseDto;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.service.MovieSessionService;
 
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/moviesessions")
 public class MovieSessionController {
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final MovieSessionService movieSessionService;
 
     public MovieSessionController(MovieSessionService movieSessionService) {
@@ -27,40 +30,40 @@ public class MovieSessionController {
     }
 
     @PostMapping("/add")
-    private void addMovieSession(@RequestBody MovieSessionDto movieSessionDto) {
+    private void addMovieSession(@RequestBody MovieSessionRequestDto movieSessionDto) {
         MovieSession movieSession = new MovieSession();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        movieSession.setShowTime(LocalDateTime.parse(movieSessionDto.getShowTime(), formatter));
+        movieSession.setShowTime(LocalDateTime.parse(movieSessionDto.getShowTime(), FORMATTER));
         movieSession.setMovie(movieSessionDto.getMovie());
         movieSession.setCinemaHall(movieSessionDto.getCinemaHall());
         movieSessionService.add(movieSession);
     }
 
     @GetMapping("/available")
-    private List<MovieSessionDto> getAllMovieSessions(@RequestParam(name = "movie_id") Long movieId,
-                                                      @RequestParam(name = "date") String date) {
+    private List<MovieSessionResponseDto> getAllMovieSessions(
+            @RequestParam(name = "movie_id") Long movieId,
+            @RequestParam(name = "date") String date) {
         LocalDate localDate = LocalDate.parse(date);
         return movieSessionService.findAvailableSessions(movieId, localDate)
                 .stream()
-                .map(this::movieSessionToMovieSessionDto)
+                .map(this::getMovieSessionToMovieSessionResponseDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/")
-    private List<MovieSessionDto> getAll() {
+    private List<MovieSessionResponseDto> getAll() {
         return movieSessionService
                 .getAll()
                 .stream()
-                .map(this::movieSessionToMovieSessionDto)
+                .map(this::getMovieSessionToMovieSessionResponseDto)
                 .collect(Collectors.toList());
     }
 
-    private MovieSessionDto movieSessionToMovieSessionDto(MovieSession movieSession) {
-        MovieSessionDto movieSessionDto = new MovieSessionDto();
+    private MovieSessionResponseDto getMovieSessionToMovieSessionResponseDto(
+            MovieSession movieSession) {
+        MovieSessionResponseDto movieSessionDto = new MovieSessionResponseDto();
         movieSessionDto.setCinemaHall(movieSession.getCinemaHall());
         movieSessionDto.setMovie(movieSession.getMovie());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        movieSessionDto.setShowTime(movieSession.getShowTime().format(formatter));
+        movieSessionDto.setShowTime(movieSession.getShowTime().format(FORMATTER));
         return movieSessionDto;
     }
 }

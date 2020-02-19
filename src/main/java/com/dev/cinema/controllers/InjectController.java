@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
+public class InjectController {
     private final MovieService movieService;
     private final CinemaHallService cinemaHallService;
     private final MovieSessionService movieSessionService;
@@ -30,10 +30,10 @@ public class HelloController {
     private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
 
-    public HelloController(MovieService movieService, CinemaHallService cinemaHallService,
-                           MovieSessionService movieSessionService,
-                           AuthenticationService authenticationService,
-                           ShoppingCartService shoppingCartService, OrderService orderService) {
+    public InjectController(MovieService movieService, CinemaHallService cinemaHallService,
+                            MovieSessionService movieSessionService,
+                            AuthenticationService authenticationService,
+                            ShoppingCartService shoppingCartService, OrderService orderService) {
         this.movieService = movieService;
         this.cinemaHallService = cinemaHallService;
         this.movieSessionService = movieSessionService;
@@ -42,7 +42,7 @@ public class HelloController {
         this.orderService = orderService;
     }
 
-    @GetMapping(value = "/hello")
+    @GetMapping(value = "/inject")
     public String sayHello() throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
@@ -69,6 +69,6 @@ public class HelloController {
         ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         Order order = orderService.completeOrder(shoppingCart);
         orderService.getOrderHistory(user).forEach(System.out::println);
-        return "hello";
+        return "Inject successful!";
     }
 }

@@ -1,6 +1,7 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.dto.CinemaHallDto;
+import com.dev.cinema.dto.CinemaHallRequestDto;
+import com.dev.cinema.dto.CinemaHallResponseDto;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.service.CinemaHallService;
 
@@ -23,23 +24,23 @@ public class CinemaHallController {
     }
 
     @GetMapping("/")
-    private List<CinemaHallDto> getAllCinemaHalls() {
+    private List<CinemaHallResponseDto> getAllCinemaHalls() {
         return cinemaHallService.getAll()
                 .stream()
-                .map(this::cinemaHallToCinemaHallDto)
+                .map(this::getCinemaHallToCinemaHallResponseDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/add")
-    private void addCinemaHall(@RequestBody CinemaHallDto cinemaHallDto) {
+    private void addCinemaHall(@RequestBody CinemaHallRequestDto cinemaHallDto) {
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setDescription(cinemaHallDto.getDescription());
         cinemaHall.setCapacity(cinemaHallDto.getCapacity());
         cinemaHallService.add(cinemaHall);
     }
 
-    private CinemaHallDto cinemaHallToCinemaHallDto(CinemaHall cinemaHall) {
-        CinemaHallDto cinemaHallDto = new CinemaHallDto();
+    private CinemaHallResponseDto getCinemaHallToCinemaHallResponseDto(CinemaHall cinemaHall) {
+        CinemaHallResponseDto cinemaHallDto = new CinemaHallResponseDto();
         cinemaHallDto.setCapacity(cinemaHall.getCapacity());
         cinemaHallDto.setDescription(cinemaHall.getDescription());
         return cinemaHallDto;
