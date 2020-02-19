@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping
 public class AuthenticationController {
-    private static final Logger logger = LogManager.getLogger(AuthenticationController.class);
+    private static final Logger LOGGER = LogManager.getLogger(AuthenticationController.class);
 
     private final AuthenticationService authenticationService;
 
@@ -28,7 +28,7 @@ public class AuthenticationController {
         try {
             authenticationService.login(userRequestDto.getEmail(), userRequestDto.getPassword());
         } catch (AuthenticationException e) {
-            logger.error("Wrong authentication parameters", e);
+            LOGGER.error("Wrong authentication parameters", e);
             return e.getMessage();
         }
         return "Login successful!";

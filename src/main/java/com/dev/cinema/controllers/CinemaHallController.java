@@ -33,9 +33,7 @@ public class CinemaHallController {
 
     @PostMapping("/add")
     private void addCinemaHall(@RequestBody CinemaHallRequestDto cinemaHallDto) {
-        CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setDescription(cinemaHallDto.getDescription());
-        cinemaHall.setCapacity(cinemaHallDto.getCapacity());
+        CinemaHall cinemaHall = cinemaHallService.getById(cinemaHallDto.getCinemaHallId());
         cinemaHallService.add(cinemaHall);
     }
 

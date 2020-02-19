@@ -3,6 +3,8 @@ package com.dev.cinema.controllers;
 import com.dev.cinema.dto.MovieSessionRequestDto;
 import com.dev.cinema.dto.MovieSessionResponseDto;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.service.CinemaHallService;
+import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
 
 import java.time.LocalDate;
@@ -24,17 +26,23 @@ public class MovieSessionController {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final MovieSessionService movieSessionService;
+    private final MovieService movieService;
+    private final CinemaHallService cinemaHallService;
 
-    public MovieSessionController(MovieSessionService movieSessionService) {
+    public MovieSessionController(MovieSessionService movieSessionService,
+                                  MovieService movieService,
+                                  CinemaHallService cinemaHallService) {
         this.movieSessionService = movieSessionService;
+        this.movieService = movieService;
+        this.cinemaHallService = cinemaHallService;
     }
 
     @PostMapping("/add")
     private void addMovieSession(@RequestBody MovieSessionRequestDto movieSessionDto) {
         MovieSession movieSession = new MovieSession();
         movieSession.setShowTime(LocalDateTime.parse(movieSessionDto.getShowTime(), FORMATTER));
-        movieSession.setMovie(movieSessionDto.getMovie());
-        movieSession.setCinemaHall(movieSessionDto.getCinemaHall());
+        movieSession.setMovie(movieService.getById(movieSessionDto.getMovieId()));
+        movieSession.setCinemaHall(cinemaHallService.getById(movieSessionDto.getCinemaHallId()));
         movieSessionService.add(movieSession);
     }
 
@@ -61,8 +69,8 @@ public class MovieSessionController {
     private MovieSessionResponseDto getMovieSessionToMovieSessionResponseDto(
             MovieSession movieSession) {
         MovieSessionResponseDto movieSessionDto = new MovieSessionResponseDto();
-        movieSessionDto.setCinemaHall(movieSession.getCinemaHall());
-        movieSessionDto.setMovie(movieSession.getMovie());
+        movieSessionDto.setCinemaHallDescription(movieSession.getCinemaHall().getDescription());
+        movieSessionDto.setMovieTitle(movieSession.getMovie().getTitle());
         movieSessionDto.setShowTime(movieSession.getShowTime().format(FORMATTER));
         return movieSessionDto;
     }

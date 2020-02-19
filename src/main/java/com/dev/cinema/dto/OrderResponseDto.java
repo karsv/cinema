@@ -1,37 +1,25 @@
 package com.dev.cinema.dto;
 
-import com.dev.cinema.model.Ticket;
-import com.dev.cinema.model.User;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderResponseDto {
-    private List<Ticket> tickets;
-    private User user;
-    private LocalDateTime orderDate;
+    private Long userId;
 
-    public List<Ticket> getTickets() {
-        return tickets;
+    private List<TicketDto> ticketDtoList;
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public User getUser() {
-        return user;
+    public List<TicketDto> getTicketDtoList() {
+        return ticketDtoList;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
+    public void setTicketDtoList(List<TicketDto> ticketDtoList) {
+        this.ticketDtoList = ticketDtoList;
     }
 }
