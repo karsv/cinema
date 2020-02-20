@@ -23,7 +23,7 @@ public class CinemaHallController {
         this.cinemaHallService = cinemaHallService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     private List<CinemaHallResponseDto> getAllCinemaHalls() {
         return cinemaHallService.getAll()
                 .stream()

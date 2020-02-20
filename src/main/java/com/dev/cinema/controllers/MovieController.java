@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/movies")
 public class MovieController {
     private final MovieService movieService;
 
@@ -31,7 +31,7 @@ public class MovieController {
         return movieService.add(movie);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<MovieResponseDto> getAllMovie() {
         return movieService
                 .getAll()

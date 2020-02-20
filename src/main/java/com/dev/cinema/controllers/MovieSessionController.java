@@ -47,7 +47,7 @@ public class MovieSessionController {
     }
 
     @GetMapping("/available")
-    private List<MovieSessionResponseDto> getAllMovieSessions(
+    private List<MovieSessionResponseDto> getAvailableMovieSessions(
             @RequestParam(name = "movie_id") Long movieId,
             @RequestParam(name = "date") String date) {
         LocalDate localDate = LocalDate.parse(date);
@@ -57,7 +57,7 @@ public class MovieSessionController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/")
+    @GetMapping
     private List<MovieSessionResponseDto> getAll() {
         return movieSessionService
                 .getAll()
