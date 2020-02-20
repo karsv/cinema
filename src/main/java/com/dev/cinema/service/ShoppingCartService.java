@@ -12,4 +12,6 @@ public interface ShoppingCartService {
     ShoppingCart getByUser(User user);
 
     void registerNewShoppingCart(User user);
+
+    ShoppingCart getById(Long id);
 }

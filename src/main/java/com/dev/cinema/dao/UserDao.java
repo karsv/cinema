@@ -7,4 +7,6 @@ public interface UserDao {
     User add(User user) throws DataProcessingException;
 
     User findByEmail(String email) throws DataProcessingException;
+
+    User findById(Long id) throws DataProcessingException;
 }
