@@ -6,8 +6,11 @@ import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.service.AuthenticationService;
 
+import javax.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,8 +39,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public String register(@RequestBody UserRegistrationDto userRegistrationDto) {
+    public String register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult result) {
         try {
+            if(result.hasErrors()){
+                return "Wrong email parameters!";
+            }
             if (!userRegistrationDto.getPassword()
                     .equals(userRegistrationDto.getRepeatPassword())) {
                 throw new DataProcessingException("Passwords are different!");

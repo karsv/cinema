@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmailValidation {
-    String message() default "Invalid phone number";
+    String message() default "Wrong email format!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

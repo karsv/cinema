@@ -7,7 +7,6 @@ import com.dev.cinema.model.User;
 import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
-import com.dev.cinema.util.EmailUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,9 +38,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User register(String email, String password) throws DataProcessingException {
-        if (!EmailUtil.isValid(email)) {
-            throw new DataProcessingException("Wrong email format!");
-        }
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
