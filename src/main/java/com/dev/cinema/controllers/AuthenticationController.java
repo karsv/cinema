@@ -1,5 +1,6 @@
 package com.dev.cinema.controllers;
 
+import com.dev.cinema.dto.UserRegistrationDto;
 import com.dev.cinema.dto.UserRequestDto;
 import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.exception.DataProcessingException;
@@ -35,9 +36,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public String register(@RequestBody UserRequestDto userRequestDto) {
+    public String register(@RequestBody UserRegistrationDto userRegistrationDto) {
         try {
-            authenticationService.register(userRequestDto.getEmail(), userRequestDto.getPassword());
+            if (!userRegistrationDto.getPassword()
+                    .equals(userRegistrationDto.getRepeatPassword())) {
+                throw new DataProcessingException("Passwords are different!");
+            }
+            authenticationService.register(userRegistrationDto.getEmail(),
+                    userRegistrationDto.getPassword());
         } catch (DataProcessingException e) {
             return e.getMessage();
         }

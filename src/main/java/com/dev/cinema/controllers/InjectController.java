@@ -4,9 +4,6 @@ import com.dev.cinema.exception.AuthenticationException;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.model.Order;
-import com.dev.cinema.model.ShoppingCart;
-import com.dev.cinema.model.User;
 import com.dev.cinema.service.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
@@ -42,7 +39,7 @@ public class InjectController {
         this.orderService = orderService;
     }
 
-    @GetMapping(value = "/inject")
+    @GetMapping(value = "/")
     public String sayHello() throws AuthenticationException {
         Movie movie = new Movie();
         movie.setTitle("Fast and Furious");
@@ -61,14 +58,6 @@ public class InjectController {
         movieSessionService.findAvailableSessions(1L, LocalDate.now())
                 .forEach(System.out::println);
 
-        authenticationService.register("user@user.com", "123qwe");
-        User user = authenticationService.login("user@user.com", "123qwe");
-
-        shoppingCartService.addSession(movieSession, user);
-
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
-        Order order = orderService.completeOrder(user);
-        orderService.getOrderHistory(user).forEach(System.out::println);
         return "Inject successful!";
     }
 }
