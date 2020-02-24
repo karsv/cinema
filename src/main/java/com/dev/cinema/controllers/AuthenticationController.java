@@ -39,9 +39,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public String register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult result) {
+    public String register(@Valid @RequestBody UserRegistrationDto userRegistrationDto,
+                           BindingResult result) {
         try {
-            if(result.hasErrors()){
+            if (result.hasErrors()) {
                 return "Wrong email parameters!";
             }
             if (!userRegistrationDto.getPassword()
