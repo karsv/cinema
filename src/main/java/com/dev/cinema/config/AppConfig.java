@@ -55,9 +55,7 @@ public class AppConfig {
                 environment.getProperty("hibernate.hbm2ddl.auto"));
 
         localSessionFactoryBean.setHibernateProperties(properties);
-        localSessionFactoryBean.setAnnotatedClasses(CinemaHall.class,
-                Movie.class, MovieSession.class, Order.class,
-                ShoppingCart.class, Ticket.class, User.class, Role.class);
+        localSessionFactoryBean.setPackagesToScan("com.dev.cinema.model");
         return localSessionFactoryBean;
     }
 }
