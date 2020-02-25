@@ -43,11 +43,7 @@ public class AuthenticationController {
                            BindingResult result) {
         try {
             if (result.hasErrors()) {
-                return "Wrong email parameters!";
-            }
-            if (!userRegistrationDto.getPassword()
-                    .equals(userRegistrationDto.getRepeatPassword())) {
-                throw new DataProcessingException("Passwords are different!");
+                return "Wrong registration parameters!";
             }
             authenticationService.register(userRegistrationDto.getEmail(),
                     userRegistrationDto.getPassword());
