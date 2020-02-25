@@ -5,9 +5,8 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 public class ShoppingCartDto {
-    @NotNull
+    @NotNull(message = "User id couldn't be null!")
     private Long userId;
-    @NotNull
     private List<TicketDto> tickets;
 
     public Long getUserId() {

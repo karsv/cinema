@@ -10,7 +10,6 @@ import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,12 +38,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public String register(@Valid @RequestBody UserRegistrationDto userRegistrationDto,
-                           BindingResult result) {
+    public String register(@Valid @RequestBody UserRegistrationDto userRegistrationDto) {
         try {
-            if (result.hasErrors()) {
-                return "Wrong registration parameters!";
-            }
             authenticationService.register(userRegistrationDto.getEmail(),
                     userRegistrationDto.getPassword());
         } catch (DataProcessingException e) {

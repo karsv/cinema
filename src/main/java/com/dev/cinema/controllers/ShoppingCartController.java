@@ -3,7 +3,6 @@ package com.dev.cinema.controllers;
 import com.dev.cinema.dto.MovieSessionRequestDto;
 import com.dev.cinema.dto.ShoppingCartDto;
 import com.dev.cinema.dto.TicketDto;
-import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
@@ -13,13 +12,13 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,18 +59,14 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/addmoviesession")
-    public void addMovieSession(Long userId,
-                                @Valid @RequestBody MovieSessionRequestDto movieSessionDto,
-                                BindingResult result) {
-        if (result.hasErrors()) {
-            throw new DataProcessingException("Wrong parameters");
-        }
+    public void addMovieSession(Principal principal,
+                                @Valid @RequestBody MovieSessionRequestDto movieSessionDto) {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHallService.getById(movieSessionDto.getCinemaHallId()));
         movieSession.setMovie(movieService.getById(movieSessionDto.getMovieId()));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         movieSession.setShowTime(LocalDateTime.parse(movieSessionDto.getShowTime(), formatter));
-        User user = userService.findById(userId);
+        User user = userService.findByEmail(principal.getName());
         shoppingCartService.addSession(movieSession, user);
     }
 

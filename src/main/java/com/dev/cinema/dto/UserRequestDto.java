@@ -1,13 +1,14 @@
 package com.dev.cinema.dto;
 
+import com.dev.cinema.security.EmailValidation;
+
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class UserRequestDto {
-    @NotNull
-    @Size(min = 3)
+    @NotNull(message = "Email couldn't be null!")
+    @EmailValidation
     private String email;
-    @NotNull
+    @NotNull(message = "Password couldn't be null!")
     private String password;
 
     public String getEmail() {

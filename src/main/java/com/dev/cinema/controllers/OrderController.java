@@ -2,8 +2,6 @@ package com.dev.cinema.controllers;
 
 import com.dev.cinema.dto.OrderResponseDto;
 import com.dev.cinema.dto.TicketDto;
-import com.dev.cinema.dto.UserResponseDto;
-import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.Order;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
@@ -11,15 +9,12 @@ import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.UserService;
 
+import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,17 +35,13 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    private Order completeOrder(@RequestBody UserResponseDto userResponseDto) {
-        return orderService.completeOrder(userService.findByEmail(userResponseDto.getEmail()));
+    private Order completeOrder(Principal principal) {
+        return orderService.completeOrder(userService.findByEmail(principal.getName()));
     }
 
     @PostMapping
-    private List<OrderResponseDto> getAllOrders(@Valid @RequestBody UserResponseDto userRequestDto,
-                                                BindingResult result) {
-        if (result.hasErrors()) {
-            throw new DataProcessingException("Wrong parameters");
-        }
-        User user = userService.findByEmail(userRequestDto.getEmail());
+    private List<OrderResponseDto> getAllOrders(Principal principal) {
+        User user = userService.findByEmail(principal.getName());
         return orderService.getOrderHistory(user)
                 .stream()
                 .map(this::getOrderToOrderResponseDto)

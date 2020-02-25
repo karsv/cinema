@@ -3,9 +3,8 @@ package com.dev.cinema.dto;
 import javax.validation.constraints.NotNull;
 
 public class MovieRequestDto {
-    @NotNull
+    @NotNull(message = "Movie title couldn't be null!")
     private String title;
-    @NotNull
     private String description;
 
     public String getTitle() {
