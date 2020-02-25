@@ -11,6 +11,7 @@ import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.OrderService;
 import com.dev.cinema.service.UserService;
 
+import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,17 +41,13 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    private Order completeOrder(@RequestBody UserResponseDto userResponseDto) {
-        return orderService.completeOrder(userService.findByEmail(userResponseDto.getEmail()));
+    private Order completeOrder(Principal principal) {
+        return orderService.completeOrder(userService.findByEmail(principal.getName()));
     }
 
     @PostMapping
-    private List<OrderResponseDto> getAllOrders(@Valid @RequestBody UserResponseDto userRequestDto,
-                                                BindingResult result) {
-        if (result.hasErrors()) {
-            throw new DataProcessingException("Wrong parameters");
-        }
-        User user = userService.findByEmail(userRequestDto.getEmail());
+    private List<OrderResponseDto> getAllOrders(Principal principal) {
+        User user = userService.findByEmail(principal.getName());
         return orderService.getOrderHistory(user)
                 .stream()
                 .map(this::getOrderToOrderResponseDto)
