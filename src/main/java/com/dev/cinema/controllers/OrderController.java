@@ -2,8 +2,6 @@ package com.dev.cinema.controllers;
 
 import com.dev.cinema.dto.OrderResponseDto;
 import com.dev.cinema.dto.TicketDto;
-import com.dev.cinema.dto.UserResponseDto;
-import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.Order;
 import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
@@ -16,11 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -13,6 +13,7 @@ import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
@@ -60,7 +61,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/addmoviesession")
-    public void addMovieSession(Long userId,
+    public void addMovieSession(Principal principal,
                                 @Valid @RequestBody MovieSessionRequestDto movieSessionDto,
                                 BindingResult result) {
         if (result.hasErrors()) {
@@ -71,7 +72,7 @@ public class ShoppingCartController {
         movieSession.setMovie(movieService.getById(movieSessionDto.getMovieId()));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         movieSession.setShowTime(LocalDateTime.parse(movieSessionDto.getShowTime(), formatter));
-        User user = userService.findById(userId);
+        User user = userService.findByEmail(principal.getName());
         shoppingCartService.addSession(movieSession, user);
     }
 
