@@ -3,7 +3,6 @@ package com.dev.cinema.controllers;
 import com.dev.cinema.dto.MovieSessionRequestDto;
 import com.dev.cinema.dto.ShoppingCartDto;
 import com.dev.cinema.dto.TicketDto;
-import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.MovieSession;
 import com.dev.cinema.model.ShoppingCart;
 import com.dev.cinema.model.Ticket;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,11 +60,7 @@ public class ShoppingCartController {
 
     @PostMapping("/addmoviesession")
     public void addMovieSession(Principal principal,
-                                @Valid @RequestBody MovieSessionRequestDto movieSessionDto,
-                                BindingResult result) {
-        if (result.hasErrors()) {
-            throw new DataProcessingException("Wrong parameters");
-        }
+                                @Valid @RequestBody MovieSessionRequestDto movieSessionDto) {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHallService.getById(movieSessionDto.getCinemaHallId()));
         movieSession.setMovie(movieService.getById(movieSessionDto.getMovieId()));

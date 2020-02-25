@@ -2,7 +2,6 @@ package com.dev.cinema.controllers;
 
 import com.dev.cinema.dto.CinemaHallRequestDto;
 import com.dev.cinema.dto.CinemaHallResponseDto;
-import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.service.CinemaHallService;
 
@@ -11,7 +10,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,11 +34,7 @@ public class CinemaHallController {
     }
 
     @PostMapping("/add")
-    private CinemaHall addCinemaHall(@Valid @RequestBody CinemaHallRequestDto cinemaHallDto,
-                                     BindingResult result) {
-        if (result.hasErrors()) {
-            throw new DataProcessingException("Wrong parameters");
-        }
+    private CinemaHall addCinemaHall(@Valid @RequestBody CinemaHallRequestDto cinemaHallDto) {
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(cinemaHallDto.getCapacity());
         cinemaHall.setDescription(cinemaHallDto.getDescription());

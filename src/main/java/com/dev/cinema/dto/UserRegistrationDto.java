@@ -8,13 +8,13 @@ import javax.validation.constraints.Size;
 
 @PasswordEqualValidator
 public class UserRegistrationDto {
-    @NotNull
+    @NotNull(message = "Email couldn't be null!")
     @Size(min = 3)
     @EmailValidation
     private String email;
-    @NotNull
+    @NotNull(message = "Password couldn't be null!")
     private String password;
-    @NotNull
+    @NotNull(message = "Repeated password couldn't be null!")
     private String repeatPassword;
 
     public String getEmail() {
