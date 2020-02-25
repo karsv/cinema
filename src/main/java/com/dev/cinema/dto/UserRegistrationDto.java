@@ -1,10 +1,12 @@
 package com.dev.cinema.dto;
 
 import com.dev.cinema.security.EmailValidation;
+import com.dev.cinema.security.PasswordEqualValidator;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@PasswordEqualValidator
 public class UserRegistrationDto {
     @NotNull
     @Size(min = 3)

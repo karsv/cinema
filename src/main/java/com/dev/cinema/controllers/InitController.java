@@ -1,8 +1,8 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.dao.RoleDao;
 import com.dev.cinema.model.Role;
 import com.dev.cinema.model.User;
+import com.dev.cinema.service.RoleService;
 import com.dev.cinema.service.UserService;
 
 import javax.annotation.PostConstruct;
@@ -17,7 +17,7 @@ public class InitController {
     private UserService userService;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleService roleService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -26,10 +26,10 @@ public class InitController {
     private void postConstruct() {
         Role adminRole = new Role();
         adminRole.setRoleName("ADMIN");
-        roleDao.add(adminRole);
+        roleService.add(adminRole);
         Role userRole = new Role();
         userRole.setRoleName("USER");
-        roleDao.add(userRole);
+        roleService.add(userRole);
 
         User user = new User();
         user.setEmail("admin@admin.com");
