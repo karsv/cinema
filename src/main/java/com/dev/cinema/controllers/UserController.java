@@ -2,9 +2,13 @@ package com.dev.cinema.controllers;
 
 import com.dev.cinema.dto.UserRequestDto;
 import com.dev.cinema.dto.UserResponseDto;
+import com.dev.cinema.exception.DataProcessingException;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.UserService;
 
+import javax.validation.Valid;
+
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +25,11 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public void addUser(@RequestBody UserRequestDto userRequestDto) {
+    public void addUser(@Valid @RequestBody UserRequestDto userRequestDto,
+                        BindingResult result) {
+        if (result.hasErrors()) {
+            throw new DataProcessingException("Wrong parameters");
+        }
         User user = new User();
         user.setPassword(userRequestDto.getPassword());
         user.setEmail(userRequestDto.getEmail());

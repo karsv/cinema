@@ -1,9 +1,13 @@
-package com.dev.cinema.util;
+package com.dev.cinema.security;
 
 import java.util.regex.Pattern;
 
-public class EmailUtil {
-    public static boolean isValid(String email) {
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class CustomEmailValidator implements ConstraintValidator<EmailValidation, String> {
+    @Override
+    public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."
                 + "[a-zA-Z0-9_+&*-]+)*@"
                 + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
