@@ -34,7 +34,7 @@ public class AppConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean getsessionFactory() {
+    public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean localSessionFactoryBean
                 = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(getDataSource());
